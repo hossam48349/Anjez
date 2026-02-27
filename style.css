@@ -42,6 +42,41 @@ body{
 
 /* note colors dark */
 [data-bs-theme="dark"] .note{ box-shadow: 0 10px 25px rgba(0,0,0,.35); color:#0b1220; }
+.app-footer{
+  padding: 18px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.6);
+  backdrop-filter: blur(10px);
+}
+
+[data-bs-theme="dark"] .app-footer{
+  border-top-color: rgba(255,255,255,.12);
+  background: rgba(20,20,20,.35);
+}
+
+.app-footer__inner{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: rgba(0,0,0,.65);
+}
+
+[data-bs-theme="dark"] .app-footer__inner{
+  color: rgba(255,255,255,.70);
+}
+
+.app-footer__link{
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px dashed rgba(13,110,253,.55);
+}
+
+.app-footer__link:hover{
+  border-bottom-style: solid;
+}
 [data-bs-theme="dark"] .note-yellow { background: linear-gradient(135deg,#fbbf24,#f59e0b); }
 [data-bs-theme="dark"] .note-blue   { background: linear-gradient(135deg,#60a5fa,#3b82f6); }
 [data-bs-theme="dark"] .note-pink   { background: linear-gradient(135deg,#fb7185,#f43f5e); }

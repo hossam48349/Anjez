@@ -249,35 +249,6 @@ confirmClearAll.addEventListener("click", () => {
   render();
 });
 
-// Export/Import
-exportBtn.addEventListener("click", () => {
-  const blob = new Blob([JSON.stringify(items, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "todo-notes-export.json";
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast(t("exported"));
-});
-
-importInput.addEventListener("change", async () => {
-  const file = importInput.files?.[0];
-  if (!file) return;
-  try {
-    const text = await file.text();
-    const data = JSON.parse(text);
-    if (!Array.isArray(data)) throw new Error("Invalid format");
-    items = data;
-    save();
-    showToast(t("imported"));
-    render();
-  } catch {
-    showToast(t("importFailed"));
-  } finally {
-    importInput.value = "";
-  }
-});
 
 // Event delegation
 cardsEl.addEventListener("click", (e) => {
@@ -667,3 +638,4 @@ function escapeHtml(str) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+document.getElementById("year").textContent = new Date().getFullYear();
