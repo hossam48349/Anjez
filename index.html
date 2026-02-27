@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anjez </title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="bg-body">
+
+  <!-- Top Bar -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+        ✅ <span data-i18n="appTitle">Anjez</span>
+        <span class="badge text-bg-primary ms-1" id="navTotal">0</span>
+      </a>
+
+      <div class="d-flex align-items-center gap-2">
+        <select id="langSelect" class="form-select form-select-sm" style="max-width:140px">
+          <option value="ar">العربية</option>
+          <option value="en">English</option>
+        </select>
+
+      
+
+        <button id="themeToggle" class="btn btn-outline-primary btn-sm" type="button" title="Toggle theme">
+          🌙
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+
+    <!-- Summary -->
+    <div class="rounded-4 p-3 p-md-4 border bg-body-tertiary shadow-sm mb-4">
+      <div class="row g-3 align-items-center">
+        <div class="col-12 col-lg-6">
+          <h1 class="h3 mb-1 fw-bold" data-i18n="dashboardTitle">لوحة المهام</h1>
+          <div class="text-body-secondary" data-i18n="dashboardSub">
+            أضف مهام + نوتس بألوان + تتبع الإنجاز
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="row g-2">
+            <div class="col-4">
+              <div class="p-3 rounded-4 bg-body border text-center">
+                <div class="small text-body-secondary" data-i18n="total">Total</div>
+                <div class="fw-bold fs-5" id="sumTotal">0</div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-3 rounded-4 bg-body border text-center">
+                <div class="small text-body-secondary" data-i18n="active">Active</div>
+                <div class="fw-bold fs-5 text-primary" id="sumActive">0</div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-3 rounded-4 bg-body border text-center">
+                <div class="small text-body-secondary" data-i18n="done">Done</div>
+                <div class="fw-bold fs-5 text-success" id="sumDone">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 d-flex justify-content-between align-items-center">
+            <span class="small text-body-secondary" data-i18n="progress">🎯 نسبة الإنجاز</span>
+            <span class="small text-body-secondary" id="sumText">0 / 0</span>
+          </div>
+          <div class="progress mt-2" style="height: 10px;">
+            <div id="sumBar" class="progress-bar" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls Row -->
+    <div class="row g-3 mb-3">
+      <!-- Form -->
+      <div class="col-12 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h2 class="h5 mb-0 fw-bold" data-i18n="addTask">➕ إضافة مهمة</h2>
+              <span class="badge text-bg-secondary"></span>
+            </div>
+
+            <form id="taskForm" class="vstack gap-2">
+              <input id="nameInput" class="form-control" placeholder="اسم المهمة" data-i18n-ph="taskNamePh" required>
+
+              <div class="row g-2">
+                <div class="col-6">
+                  <input id="dateInput" type="datetime-local" class="form-control" />
+                </div>
+                <div class="col-6">
+                  <select id="prioritySelect" class="form-select">
+                    <option value="high" data-i18n="pHigh">High</option>
+                    <option value="medium" selected data-i18n="pMedium">Medium</option>
+                    <option value="low" data-i18n="pLow">Low</option>
+                  </select>
+                </div>
+              </div>
+
+              <input id="tagsInput" class="form-control" placeholder="tags: work, study, gym" data-i18n-ph="tagsPh">
+
+              <input id="imageInput" type="file" class="form-control" accept="image/*">
+
+              <textarea id="notesInput" class="form-control" rows="3" placeholder="اكتب أول نوت..." data-i18n-ph="firstNotePh" required></textarea>
+
+              <div class="d-flex gap-2">
+                <select id="noteColor" class="form-select">
+                  <option value="note-yellow">Yellow</option>
+                  <option value="note-blue">Blue</option>
+                  <option value="note-pink">Pink</option>
+                  <option value="note-green">Green</option>
+                  <option value="note-purple">Purple</option>
+                </select>
+
+                <button class="btn btn-primary flex-grow-1" type="submit" data-i18n="add">Add</button>
+              </div>
+
+              <div class="small text-body-secondary mt-1" data-i18n="tip">
+                💡 Tip: تقدر تضيف Notes إضافية من داخل الكارت.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search / Filters / Sort -->
+      <div class="col-12 col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4">
+          <div class="card-body">
+            <div class="row g-2 align-items-center">
+              <div class="col-12 col-md-5">
+                <input id="searchInput" type="search" class="form-control" placeholder="🔎 ابحث..." data-i18n-ph="searchPh">
+              </div>
+
+              <div class="col-12 col-md-4">
+                <div class="btn-group w-100" role="group">
+                  <button class="btn btn-outline-secondary active" type="button" data-filter="all" data-i18n="fAll">All</button>
+                  <button class="btn btn-outline-primary" type="button" data-filter="active" data-i18n="fActive">Active</button>
+                  <button class="btn btn-outline-success" type="button" data-filter="done" data-i18n="fDone">Done</button>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-3">
+                <select id="sortSelect" class="form-select">
+                  <option value="newest" selected data-i18n="sNewest">Sort: Newest</option>
+                  <option value="oldest" data-i18n="sOldest">Sort: Oldest</option>
+                  <option value="due" data-i18n="sDue">Sort: Due date</option>
+                  <option value="priority" data-i18n="sPriority">Sort: Priority</option>
+                </select>
+              </div>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="d-flex flex-wrap gap-2 justify-content-end">
+              <button id="clearDoneBtn" class="btn btn-outline-success btn-sm" type="button" data-i18n="clearDone">Clear Completed</button>
+              <button class="btn btn-outline-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#confirmClearModal" data-i18n="clearAll">
+                Clear All
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="row g-3" id="cards"></div>
+  </main>
+
+  <!-- Confirm Clear Modal -->
+  <div class="modal fade" id="confirmClearModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title" data-i18n="confirmTitle">تأكيد الحذف</h5>
+          <button type="button" class="btn-close ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" data-i18n="confirmBody">
+          هل أنت متأكد أنك تريد حذف كل المهام؟
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="cancel">Cancel</button>
+          <button id="confirmClearAll" class="btn btn-danger" data-bs-dismiss="modal" data-i18n="yesDelete">Yes, Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container position-fixed bottom-0 start-0 p-3">
+    <div id="appToast" class="toast align-items-center text-bg-dark border-0 rounded-4" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body" id="toastText">Done</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./index.js"></script>
+</body>
+</html>
